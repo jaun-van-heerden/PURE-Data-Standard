@@ -38,7 +38,7 @@ In a cataclysmic event of unprecedented proportions, a monstrous tornado ripped 
     "homes": "10+",
     "businesses": "10+"
   },
-  "references": [<ref-a>, <ref-b>]
+  "references": ["ref-a", "ref-b"]
 }
 ```
 
