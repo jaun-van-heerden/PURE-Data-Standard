@@ -43,3 +43,10 @@ In a cataclysmic event of unprecedented proportions, a monstrous tornado ripped 
 ```
 
 In the PURE standard equivalent, the information is presented in a factual and objective manner, without sensationalism or speculative commentary. Each attribute provides specific details about the natural disaster event, such as the type of event, location, casualties, and damage. This representation adheres to the principles of the PURE data standardization framework, ensuring replicability and consistency in data reporting.
+
+
+todo:
+
+- introduce a single type entity (data block) which allows either referenced or children datablocks
+- python module
+- blockchain technology considerations
