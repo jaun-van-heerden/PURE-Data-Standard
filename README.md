@@ -25,8 +25,8 @@ compiles to this PURE report (pretty-printed here; the stored form is canonical 
     "retrievedAt": "2024-02-18T22:14:03Z"
   },
   "claims": [
-    {"f": "deaths", "v": null, "q": "the death toll continued to climb by the hour"},
-    {"f": "homes_destroyed", "v": null, "q": "homes were torn apart"},
+    {"f": "casualties.deaths", "v": null, "q": "the death toll continued to climb by the hour"},
+    {"f": "damage.homes_destroyed", "v": null, "q": "homes were torn apart"},
     {"f": "rescue_ongoing", "v": true, "q": "Rescue teams battled against the odds to save survivors trapped beneath the rubble"},
     {"f": "said", "by": "Experts",
      "v": "this could be just the beginning of a new era of extreme weather events brought on by climate change",
@@ -47,11 +47,27 @@ Read what the encoding *says*:
 - **Subjectivity survives as attribution.** "Experts warn…" is kept — as the objective fact that experts said it (`said` + `by`), not as a fact about the weather.
 - **Sensationalism compiles to nothing.** "Cataclysmic proportions," "cars tossed like toys," "lives shattered" — there is no field to claim, so the framing is discarded by construction, not by editorial judgment.
 
+Field names are dotted paths (`casualties.deaths`) — the event's hierarchy lives in the names, and `tools/show.py` folds any report into the event-shaped object they imply:
+
+```json
+$ python3 tools/show.py fixtures/disaster.tornado/regionx-courier/expected.json
+{
+  "event": { "what": "disaster.tornado", "when": "2024-02-18", "where": "Coastal City, Region X, Country Y" },
+  "casualties": { "deaths": 2, "injuries": {"min": 14} },
+  "damage": { "homes_destroyed": 37 },
+  "ef_rating": "EF3",
+  "rescue_ongoing": false,
+  "report": { "id": "sha256:b4400f27…", "eventKey": "disaster.tornado|2024-02-18|Coastal City, Region X, Country Y", … }
+}
+```
+
+The tree is a **view**; the flat claims are the record. One fact = one claim is what makes cross-outlet diffing, per-fact corroboration, and per-field agreement measurement trivial — and the clean tree is always derivable from the receipted record (add `--receipts` to keep every value's quote and attribution), while the reverse would throw the evidence away.
+
 > **A confession that doubles as the pitch:** an earlier version of this README encoded this same article as `"fatalities": 2, "injuries": "10+"` — numbers that appear nowhere in the prose. Even the standard's own authors hallucinated when values didn't require quotes. Under v0.1 that encoding is not merely discouraged; it is **impossible to validate**.
 
 ## How it works — the whole model in eight concepts
 
-1. **Claim** — `{f, v, q, by?, t?}`: field, value, verbatim quote, optional attributor, optional as-of instant. The only primitive.
+1. **Claim** — `{f, v, q, by?, t?}`: field, value, verbatim quote, optional attributor, optional as-of instant. The only primitive. Fields are dotted paths (`casualties.deaths`): the event hierarchy lives in the names, and `tools/show.py` folds a report back into the tree.
 2. **Report** — a sealed, immutable bag of claims about one source. Its ID is the hash of its canonical bytes.
 3. **Values** — string, integer, `{min?,max?}`, ISO date, ID (`wd:`/`gn:`/`geo:`), or `null`. Numbers only when the source states numbers.
 4. **Reserved fields** — `what`, `when`, `where` (required); `via` (declared derivation); `said` (attributed statements).
@@ -85,17 +101,17 @@ A: https://coastal-herald.example/apocalyptic-tornado  (retrieved 2024-02-18T22:
 B: https://regionx-courier.example/tornado-damage-assessment  (retrieved 2024-02-19T10:30:00Z)
 event key: disaster.tornado|2024-02-18|Coastal City, Region X, Country Y  — same event
 
-field            A                                    B                                              verdict
----------------  -----------------------------------  ---------------------------------------------  ------------
-deaths           null                                 2 · by the county sheriff · as of 2024-02-19   B quantifies
-ef_rating        —                                    "EF3" · by The National Weather Bureau         B only
-homes_destroyed  null                                 37 · by The emergency office                   B quantifies
-injuries         —                                    {"min":14} · by the county sheriff · as of…    B only
-rescue_ongoing   true                                 false · by The emergency office · as of 2024…  DIFFER
-said             "this could be just the beginning…"  —                                              A only
-what             "disaster.tornado"                   "disaster.tornado"                             agree
-when             "2024-02-18"                         "2024-02-18"                                   agree
-where            "Coastal City, Region X, Country Y"  "Coastal City, Region X, Country Y"            agree
+field                   A                                    B                                              verdict
+----------------------  -----------------------------------  ---------------------------------------------  ------------
+casualties.deaths       null                                 2 · by the county sheriff · as of 2024-02-19   B quantifies
+casualties.injuries     —                                    {"min":14} · by the county sheriff · as of…    B only
+damage.homes_destroyed  null                                 37 · by The emergency office                   B quantifies
+ef_rating               —                                    "EF3" · by The National Weather Bureau         B only
+rescue_ongoing          true                                 false · by The emergency office · as of 2024…  DIFFER
+said                    "this could be just the beginning…"  —                                              A only
+what                    "disaster.tornado"                   "disaster.tornado"                             agree
+when                    "2024-02-18"                         "2024-02-18"                                   agree
+where                   "Coastal City, Region X, Country Y"  "Coastal City, Region X, Country Y"            agree
 
 evidence roots: 2 — neither report declares derivation (via).
 Root counts are provenance breadth, not truth (SPEC.md §9).
@@ -125,14 +141,14 @@ regionx-courier.example/tornado-damage-assessment   (self) — independent root
 distinct roots: 2
 
 value support (independent roots, not reports):
-  deaths=2              1 root  (2 reports)
-  deaths=null           1 root
-  ef_rating="EF3"       1 root  (2 reports)
-  homes_destroyed=37    1 root  (2 reports)
+  casualties.deaths=2             1 root  (2 reports)
+  casualties.deaths=null          1 root
+  damage.homes_destroyed=37       1 root  (2 reports)
+  ef_rating="EF3"                 1 root  (2 reports)
   ...
 ```
 
-This is the whole anti-bandwagon idea in one line: **`deaths=2` appears in two reports but has one root.** Every published death toll traces back through the Courier to a single attributed statement by the county sheriff. Fifty more republications would still be one root. (And the honest caveat, always: roots measure provenance breadth, not truth — a motivated adversary can fabricate roots; see SPEC.md §9.)
+This is the whole anti-bandwagon idea in one line: **`casualties.deaths=2` appears in two reports but has one root.** Every published death toll traces back through the Courier to a single attributed statement by the county sheriff. Fifty more republications would still be one root. (And the honest caveat, always: roots measure provenance breadth, not truth — a motivated adversary can fabricate roots; see SPEC.md §9.)
 
 ## Render it back
 
@@ -158,14 +174,14 @@ $ python3 tools/validate.py fixtures/disaster.tornado/nws-effingham/expected.jso
 VALID — event key: disaster.tornado|2026-06-17|dnby
 ```
 
-Every quote in the report was extracted programmatically from the fetched bytes, and `deaths: 0` is a *claim* (the survey states zero) — meaningfully different from the fictional Herald's `null` (raised, unquantified) and from silence.
+Every quote in the report was extracted programmatically from the fetched bytes, and `casualties.deaths: 0` is a *claim* (the survey states zero) — meaningfully different from the fictional Herald's `null` (raised, unquantified) and from silence.
 
 Reality immediately forced the spec to evolve — which is the design working, not failing:
 
 - **Decimal numbers** (v0.1 allowed only integers; the survey's path length is `31.83` miles) — SPEC §3 amended.
 - **Event-local dates in the key** (the tornado began 7:56 PM CDT — already June 18 in UTC; keying on UTC would split this event from every source that calls it "the June 17 tornado") — SPEC §5 amended.
 - **Units stay in `ext:` field names** (`ext:peak_wind_mph`) — conversion is inference; SI units get fixed at promotion time.
-- **Per-location counts are not totals** (the narrative destroys "two single-family homes" at one intersection — that is not `homes_destroyed` for the event) — class-file rule sharpened.
+- **Per-location counts are not totals** (the narrative destroys "two single-family homes" at one intersection — that is not `damage.homes_destroyed` for the event) — class-file rule sharpened.
 
 ## Repository layout
 
@@ -179,6 +195,7 @@ tools/diff.py                field-by-field comparison of two reports
 tools/roots.py               corroboration: collapse via chains, count roots
 tools/render.py              report → neutral prose, via any LLM
 tools/ingest.py              fetch source → extraction prompt → seal report
+tools/show.py                fold flat claims into the event-shaped tree view
 ```
 
 ## Contributing a field
