@@ -107,6 +107,43 @@ Read the table:
 - **`DIFFER` on `rescue_ongoing` is time, not conflict.** A (Sunday 22:14) describes an active rescue; B reports it concluded Sunday evening. Twelve hours passed between retrievals — this is exactly why claims carry `t` and reports carry `retrievedAt`, and why the death-toll-over-time query works.
 - **Two evidence roots.** Neither report derives from the other, so corroboration counts 2. Had B carried `via: coastal-herald…`, it would count 1.
 
+## Count independent roots — the anti-bandwagon query
+
+A third fixture is a republication: the Country Y Daily Mirror repeats the Courier's numbers and credits it — which becomes a `via` claim, quoted like any other ("according to a report by the Region X Courier"). Run corroboration across all three:
+
+```
+$ python3 tools/roots.py fixtures/disaster.tornado/*/expected.json
+
+3 reports · event key: disaster.tornado|2024-02-18|Coastal City, Region X, Country Y
+
+report                                              root
+--------------------------------------------------------
+coastal-herald.example/apocalyptic-tornado          (self) — independent root
+countryy-mirror.example/coastal-city-tornado-kill…  via → regionx-courier.example/tornado-damage-assessment
+regionx-courier.example/tornado-damage-assessment   (self) — independent root
+
+distinct roots: 2
+
+value support (independent roots, not reports):
+  deaths=2              1 root  (2 reports)
+  deaths=null           1 root
+  ef_rating="EF3"       1 root  (2 reports)
+  homes_destroyed=37    1 root  (2 reports)
+  ...
+```
+
+This is the whole anti-bandwagon idea in one line: **`deaths=2` appears in two reports but has one root.** Every published death toll traces back through the Courier to a single attributed statement by the county sheriff. Fifty more republications would still be one root. (And the honest caveat, always: roots measure provenance breadth, not truth — a motivated adversary can fabricate roots; see SPEC.md §9.)
+
+## Render it back
+
+The loop closes with any LLM:
+
+```
+$ python3 tools/render.py fixtures/disaster.tornado/coastal-herald/expected.json --lang Afrikaans
+```
+
+This prints a self-contained, model-agnostic prompt: render only the claims, say "raised without a figure" for `null` values, attribute everything carrying `by`, no adjectives beyond the data, and end with the source URL and report ID — the `view-source` line of the rendered article. Because the data is language-neutral, the same report renders to calm prose in any language at any reading level.
+
 ## Repository layout
 
 ```
@@ -115,6 +152,8 @@ classes/<parent>/<class>.md  one file per event class: fields + questions + fixt
 fixtures/<class>/<name>/     source.txt + expected.json (canonical bytes)
 tools/validate.py            reference validator
 tools/diff.py                field-by-field comparison of two reports
+tools/roots.py               corroboration: collapse via chains, count roots
+tools/render.py              report → neutral prose, via any LLM
 ```
 
 ## Contributing a field
