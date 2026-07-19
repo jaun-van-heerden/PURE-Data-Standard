@@ -1,0 +1,132 @@
+278 
+NOUS43 KILX 250931
+PNSILX
+ILZ027>031-036>038-040>057-061>063-066>068-071>073-251045-
+
+Public Information Statement
+National Weather Service Lincoln IL
+431 AM CDT Thu Jun 25 2026
+
+...NWS Damage Survey for 6/17/2026 Tornado Event - Update #3...
+
+.Update to the Effingham Tornado...
+
+Evidence from Sentinel satellite data and a spotter video we recieved 
+of the tornado as it moved from Effingham County into Jasper County, 
+it is clear that the tornado remained on the ground continuously until
+it ended 4 miles west of Rose Hill. The path length of the tornado is now
+31.83 miles. In addition, the Grove tornado has been removed and the 
+total number of tornadoes that occurred on 6/17/2026 is now at 7.  
+
+.Effingham Tornado...
+
+Rating:                 EF3
+Estimated Peak Wind:    150 mph
+Path Length /statute/:  31.83 miles
+Path Width /maximum/:   500 yards
+Fatalities:             0
+Injuries:               2
+
+Start Date:             06/17/2026
+Start Time:             07:56 PM CDT
+Start Location:         1 WNW Beecher City / Effingham County / IL
+Start Lat/Lon:          39.1904 / -88.7975
+
+End Date:               06/17/2026
+End Time:               08:34 PM CDT
+End Location:           4 W Rose Hill / Jasper County / IL
+End Lat/Lon:            39.0983 / -88.2232
+
+Survey Summary:
+Originating in Beecher City within Effingham County, the tornado
+first touched down along E State Highway 33. The storm's initial
+path spanned approximately one-quarter mile in width, resulting in
+EF0 and EF1 level damage. This impact was characterized by the
+snapping and uprooting of large trees, alongside sporadic damage
+to grain silos and farm out-buildings, with notable effects
+observed near N 300th St on the outskirts of Beecher City.
+
+Moving eastward through Shumway, the tornado crossed State Highway 
+32 and proceeded parallel to E 1800th Ave. Although the path width
+constricted to just over one-tenth of a mile, the storm
+intensified, producing EF-2 level damage. The increased strength
+resulted in hardwood and softwood tree trunks being snapped
+approximately two-thirds of the way up. Additionally, the tornado
+caused significant structural destruction, including the removal
+of a roof from a single-family home and the collapse of several
+farm outbuildings. 
+
+Upon reaching the northern outskirts of rural Effingham, the 
+tornado intensified to EF-3 status as it traveled along E 1800th
+Ave. During this stage, the storm produced peak wind speeds 
+estimated at 145 mph, leading to severe tree damage and the total 
+destruction of one single-family home, which suffered complete 
+exterior wall collapses.
+
+Continuing its path along Effingham's northern perimeter, the 
+EF-3 tornado maintained a width of one-tenth to one-quarter mile. 
+Substantial structural damage occurred at a farmstead on E 1680th 
+Ave, where several large outbuildings were demolished and a 
+single-family home suffered a total roof uplift alongside partial 
+exterior wall failure. Upon entering Effingham city limits and 
+crossing US HWY 45, the storm destroyed a substantial metal 
+building system after an X-brace failed on its eastern side. 
+Nearby properties sustained further structural and severe tree 
+damage, and the force of the winds threw a delivery van 
+approximately 150 yards to the east.
+
+After departing Effingham, the tornado tracked southeastward
+and broadened to a width of approximately one-third of a mile. As
+the storm crossed Interstate 70, it inflicted major damage to
+trees and caused total roof uplift at multiple single- family
+homes. The tornado then proceeded across the northern and eastern
+parts of Teutopolis, where it caused extensive structural
+destruction to a farmstead located near the HWY 40 and N 1950th St
+intersection. Impacts at this location included the complete
+destruction of several large barns and outbuildings, as well as
+the total uplift of a single-residence roof. The tornadic storm
+maintained its EF-3 intensity as it moved eastward into rural
+Teutopolis, though its path narrowed to roughly one-tenth of a
+mile. Near the intersection of N 2100th St and E 1500th Ave, the
+storm produced peak wind speeds of 140 mph, resulting in the
+destruction of two single-family homes and significant damage to
+trees and outbuildings. Multiple non-life-threatening injuries
+were reported in this area. 
+
+As the tornado moved across the Effingham-Jasper county line, it 
+continued on a southeastward trajectory while weakening to EF-2 
+intensity. With estimated wind speeds of approximately 120 mph, 
+the storm caused moderate damage to outbuildings and trees, along 
+with minor structural impacts to single-family residences.
+
+The tornado continued to the southeast where it caused major roof 
+damage to a two-story house, rolled an SUV, damaged an outbuilding, 
+and snapped several large hardwood trees. Moving southeast toward 
+E 1700th Ave, the storm snapped the top of another large hardwood 
+and stripped shingles from a single-story residence, with further 
+tree damage reported just north of that location. East of N 700th 
+St, more tree damage occurred alongside shingle damage to a mobile 
+home. As the tornado tracked further along E 1700th Ave, it damaged 
+another outbuilding, two grain bins and additional trees before 
+finally lifting approximately 0.25 miles east of N 800th St.
+
+&&
+
+EF Scale: The Enhanced Fujita Scale classifies tornadoes into the
+following categories:
+
+EF0.....65 to 85 mph
+EF1.....86 to 110 mph
+EF2.....111 to 135 mph
+EF3.....136 to 165 mph
+EF4.....166 to 200 mph
+EF5.....>200 mph
+
+NOTE:
+The information in this statement is preliminary and subject to
+change pending final review of the event and publication in
+NWS Storm Data.
+
+$$
+
+NWS ILX

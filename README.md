@@ -144,6 +144,29 @@ $ python3 tools/render.py fixtures/disaster.tornado/coastal-herald/expected.json
 
 This prints a self-contained, model-agnostic prompt: render only the claims, say "raised without a figure" for `null` values, attribute everything carrying `by`, no adjectives beyond the data, and end with the source URL and report ID — the `view-source` line of the rendered article. Because the data is language-neutral, the same report renders to calm prose in any language at any reading level.
 
+## First real encoding
+
+The fourth fixture is not fiction: it is the National Weather Service damage survey (public domain) for the **June 17, 2026 Effingham, Illinois EF3 tornado**, fetched from a stable archive URL and encoded through the class file's questions:
+
+```
+$ python3 tools/ingest.py fetch <archive-url> --out fixtures/disaster.tornado/nws-effingham
+$ python3 tools/ingest.py prompt fixtures/disaster.tornado/nws-effingham \
+    --class classes/disaster/tornado.md          # paste into any LLM, or answer by hand
+$ python3 tools/ingest.py seal fixtures/disaster.tornado/nws-effingham --claims claims.json
+$ python3 tools/validate.py fixtures/disaster.tornado/nws-effingham/expected.json \
+    --source fixtures/disaster.tornado/nws-effingham/source.txt --class classes/disaster/tornado.md
+VALID — event key: disaster.tornado|2026-06-17|dnby
+```
+
+Every quote in the report was extracted programmatically from the fetched bytes, and `deaths: 0` is a *claim* (the survey states zero) — meaningfully different from the fictional Herald's `null` (raised, unquantified) and from silence.
+
+Reality immediately forced the spec to evolve — which is the design working, not failing:
+
+- **Decimal numbers** (v0.1 allowed only integers; the survey's path length is `31.83` miles) — SPEC §3 amended.
+- **Event-local dates in the key** (the tornado began 7:56 PM CDT — already June 18 in UTC; keying on UTC would split this event from every source that calls it "the June 17 tornado") — SPEC §5 amended.
+- **Units stay in `ext:` field names** (`ext:peak_wind_mph`) — conversion is inference; SI units get fixed at promotion time.
+- **Per-location counts are not totals** (the narrative destroys "two single-family homes" at one intersection — that is not `homes_destroyed` for the event) — class-file rule sharpened.
+
 ## Repository layout
 
 ```
@@ -154,6 +177,7 @@ tools/validate.py            reference validator
 tools/diff.py                field-by-field comparison of two reports
 tools/roots.py               corroboration: collapse via chains, count roots
 tools/render.py              report → neutral prose, via any LLM
+tools/ingest.py              fetch source → extraction prompt → seal report
 ```
 
 ## Contributing a field
@@ -166,7 +190,8 @@ Root counting defeats bandwagons (declared syndication, verbatim copying). It do
 
 ## Roadmap
 
-- **v0.1 (this)** — claim/report core, first class file, fixtures, validator.
+- **v0.1** — claim/report core, first class file, fixtures, validator.
+- **v0.1.1 (this)** — first real encoding (NWS Effingham EF3) + `tools/ingest.py`; spec amendments it forced: decimal numbers, event-local dates in keys.
 - **v0.2** — encoder identity: signed reports, keys, reputation; CI that measures per-field agreement and publishes scores in class files.
 - **v0.3** — transparency log (Certificate-Transparency-style) for publish timestamps; fetch-archive convention so quotes stay verifiable as sources rot.
 

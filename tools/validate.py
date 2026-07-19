@@ -12,12 +12,14 @@ Checks a report against the core spec (SPEC.md):
 Prints the report ID and derived event key on success. Exit 0 = valid.
 
 RFC 8785 note: this validator covers the value types the core spec allows
-(strings, integers, {min,max}, booleans, null). Non-integer numbers are
-rejected rather than canonicalized.
+(strings, numbers, {min,max}, booleans, null). Decimal numbers serialize
+per RFC 8785's ECMAScript shortest round-trip rule (Python's json matches
+for ordinary decimals).
 """
 import argparse
 import hashlib
 import json
+import math
 import re
 import sys
 
@@ -43,17 +45,16 @@ def canon(obj):
 def check_value(v, where):
     if v is None or isinstance(v, (str, bool)):
         return
-    if isinstance(v, int):
-        return
-    if isinstance(v, float):
-        err(f"{where}: non-integer numbers are not allowed in v0.1")
+    if isinstance(v, (int, float)):
+        if isinstance(v, float) and not math.isfinite(v):
+            err(f"{where}: numbers must be finite")
         return
     if isinstance(v, dict):
         if not v or not set(v) <= {"min", "max"}:
             err(f"{where}: object values must be {{min?,max?}} and non-empty")
         for k, n in v.items():
-            if not isinstance(n, int):
-                err(f"{where}: {k} must be an integer")
+            if not isinstance(n, (int, float)):
+                err(f"{where}: {k} must be a number")
         return
     err(f"{where}: unsupported value type {type(v).__name__}")
 

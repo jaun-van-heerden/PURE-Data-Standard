@@ -28,7 +28,7 @@ A report's ID is `sha256:` + the SHA-256 of its canonical bytes (§6). Reports a
 
 ## 3. Values
 
-One of: string · integer · `{"min"?, "max"?}` (integers, non-empty) · ISO-8601 date/time (UTC) · ID (`wd:` Wikidata, `gn:` GeoNames, `geo:` geohash, or an event-class path) · `null`. Units are fixed per field by the class file. Numbers only when the source states numbers.
+One of: string · number (canonical serialization per RFC 8785) · `{"min"?, "max"?}` (numbers, non-empty) · ISO-8601 date/time · ID (`wd:` Wikidata, `gn:` GeoNames, `geo:` geohash, or an event-class path) · `null`. Timestamps: date-only when the source states only a date; when the source states a local time, keep the event-local UTC offset (e.g. `2026-06-17T19:56-05:00`) — do not shift to UTC, so the date component stays the date the event's own sources use. Units are fixed per field by the class file. Numbers only when the source states numbers.
 
 ## 4. Reserved fields
 
@@ -38,7 +38,7 @@ Reserved, optional: `via` (URL or name of a work this source derives from — qu
 
 ## 5. Event key
 
-Derived, never stored: `what | utcDay(when) | cell(where)`, where `cell` is the first 4 geohash characters for `geo:` loci and the verbatim value otherwise. Reports sharing a key describe the same event. Fuzzier matching is a query-time concern, not protocol.
+Derived, never stored: `what | day(when) | cell(where)`, where `day` is the leading date component of `when` as written (the event-local date — an evening tornado must not change events at the UTC midnight boundary), and `cell` is the first 4 geohash characters for `geo:` loci and the verbatim value otherwise. Reports sharing a key describe the same event. Fuzzier matching is a query-time concern, not protocol.
 
 ## 6. Canonical form
 
