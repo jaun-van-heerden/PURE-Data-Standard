@@ -171,6 +171,7 @@ Reality immediately forced the spec to evolve — which is the design working, n
 
 ```
 SPEC.md                      the one-page normative core
+GOVERNANCE.md                how the spec may change, and how it may not
 classes/<parent>/<class>.md  one file per event class: fields + questions + fixtures
 fixtures/<class>/<name>/     source.txt + expected.json (canonical bytes)
 tools/validate.py            reference validator
@@ -183,6 +184,8 @@ tools/ingest.py              fetch source → extraction prompt → seal report
 ## Contributing a field
 
 Open a PR that edits one class file: add the field row (name, type, value rule), its extraction question, and at least one fixture demonstrating it. The merge criterion is demonstrated inter-encoder agreement on the fixtures — measured, not voted. Until CI lands, agreement is checked manually by re-encoding fixtures with independent models.
+
+How evolution stays coherent — the three-layer model, the `ext:` → observed → normative ratchet, "disputes are settled by encoding, not debating," and the lock on each failure mode — is fixed in **[GOVERNANCE.md](GOVERNANCE.md)**. Its one-sentence philosophy: *the spec is a record of demonstrated agreement, never a plan for it.*
 
 ## Honest limits
 

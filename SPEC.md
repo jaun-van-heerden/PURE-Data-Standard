@@ -46,7 +46,7 @@ RFC 8785 (JCS), UTF-8, NFC strings. Claims are sorted by `f` (Unicode code point
 
 ## 7. The spec repo
 
-The standard is one git repo. Each path under `classes/` is an event class; each class is one markdown file containing a normative field table (name, type, value rule), non-normative extraction questions, and fixtures (source → expected claims). A field enters the table only when independent encoders demonstrably agree on it across the fixtures; anything unproven uses an `ext:` prefix. Reports pin a revision of this repo; forks inherit full history and old reports validate forever.
+The standard is one git repo. Each path under `classes/` is an event class; each class is one markdown file containing a normative field table (name, type, value rule), non-normative extraction questions, and fixtures (source → expected claims). A field enters the table only when independent encoders demonstrably agree on it across the fixtures; anything unproven uses an `ext:` prefix. Reports pin a revision of this repo; forks inherit full history and old reports validate forever. How this page and the class files may change is fixed by [GOVERNANCE.md](GOVERNANCE.md): the core amends only on counterexamples; vocabulary enters only through the measured ratchet.
 
 ## 8. Conformance
 
