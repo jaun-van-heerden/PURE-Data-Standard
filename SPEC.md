@@ -32,7 +32,7 @@ One of: string · number (canonical serialization per RFC 8785) · `{"min"?, "ma
 
 ## 4. Reserved fields
 
-Required in every report: `what` (an event class = a path in this repo), `when`, `where`. `where` is the event's locus: a `geo:`/`gn:` ID for physical events when resolvable, otherwise the source's place phrase verbatim; non-physical classes name their locus field in the class file.
+Required in every report: `what` (an event class = a path in this repo), `when`, `where`. `where` is the event's locus: a `geo:`/`gn:` ID for physical events when resolvable, otherwise the source's place phrase verbatim; non-physical classes name their locus field in the class file. `where` is always a single value — it feeds the event key. Richer place detail (stated names, exact coordinates) belongs in ordinary sibling claims (e.g. `location.name`, `location.lat`), one facet per claim, each with its own quote.
 
 Reserved, optional: `via` (URL or name of a work this source derives from — quoted like any claim) and `said` (attributed statement; `by` required).
 

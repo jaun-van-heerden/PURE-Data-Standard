@@ -44,6 +44,11 @@ Fields real sources kept stating that the table above doesn't cover. Per SPEC §
 | `ext:path.width_max_yd` | nws-effingham | maximum path width as stated |
 | `ext:path.end_time` | nws-effingham | event end instant, event-local offset |
 | `ext:path.end_geo` | nws-effingham | lift point as a `geo:` geohash |
+| `ext:location.name` | nws-effingham | stated place name, verbatim |
+| `ext:location.lat` | nws-effingham | stated latitude, full precision |
+| `ext:location.lon` | nws-effingham | stated longitude, full precision |
+
+Place richness follows the same pattern as everything else: `where` stays a single locus ID (it feeds the event key), and stated place facets — name, exact coordinates — are sibling `location.*` claims, each with its own quote. Three precision tiers, each fit for purpose: the key cell joins (~geohash-4), the `where` ID locates (geohash-6), `location.lat/lon` measure (as stated).
 
 ## Fixtures
 
