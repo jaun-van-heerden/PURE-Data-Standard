@@ -73,6 +73,40 @@ VALID: fixtures/disaster.tornado/coastal-herald/expected.json
 
 The validator is a single dependency-free file. It rejects fabricated quotes, hallucinated values, enum violations, unsorted claims, and non-canonical bytes.
 
+## Compare two outlets — the point of all of this
+
+A second fixture encodes a sober day-after report on the same tornado from a different outlet. The two encoders never coordinated, yet both reports derive the **same event key**, so they join automatically:
+
+```
+$ python3 tools/diff.py fixtures/disaster.tornado/coastal-herald/expected.json \
+                        fixtures/disaster.tornado/regionx-courier/expected.json
+
+A: https://coastal-herald.example/apocalyptic-tornado  (retrieved 2024-02-18T22:14:03Z)
+B: https://regionx-courier.example/tornado-damage-assessment  (retrieved 2024-02-19T10:30:00Z)
+event key: disaster.tornado|2024-02-18|Coastal City, Region X, Country Y  — same event
+
+field            A                                    B                                              verdict
+---------------  -----------------------------------  ---------------------------------------------  ------------
+deaths           null                                 2 · by the county sheriff · as of 2024-02-19   B quantifies
+ef_rating        —                                    "EF3" · by The National Weather Bureau         B only
+homes_destroyed  null                                 37 · by The emergency office                   B quantifies
+injuries         —                                    {"min":14} · by the county sheriff · as of…    B only
+rescue_ongoing   true                                 false · by The emergency office · as of 2024…  DIFFER
+said             "this could be just the beginning…"  —                                              A only
+what             "disaster.tornado"                   "disaster.tornado"                             agree
+when             "2024-02-18"                         "2024-02-18"                                   agree
+where            "Coastal City, Region X, Country Y"  "Coastal City, Region X, Country Y"            agree
+
+evidence roots: 2 — neither report declares derivation (via).
+Root counts are provenance breadth, not truth (SPEC.md §9).
+```
+
+Read the table:
+
+- **`B quantifies` is not a contradiction.** Outlet A raised the death toll without a number (`null` + quote); outlet B states `2`, attributed to the county sheriff. And note the full circle: the "2" this repo's old README *hallucinated* now enters legitimately — stated by a source, carried with its attribution.
+- **`DIFFER` on `rescue_ongoing` is time, not conflict.** A (Sunday 22:14) describes an active rescue; B reports it concluded Sunday evening. Twelve hours passed between retrievals — this is exactly why claims carry `t` and reports carry `retrievedAt`, and why the death-toll-over-time query works.
+- **Two evidence roots.** Neither report derives from the other, so corroboration counts 2. Had B carried `via: coastal-herald…`, it would count 1.
+
 ## Repository layout
 
 ```
@@ -80,6 +114,7 @@ SPEC.md                      the one-page normative core
 classes/<parent>/<class>.md  one file per event class: fields + questions + fixtures
 fixtures/<class>/<name>/     source.txt + expected.json (canonical bytes)
 tools/validate.py            reference validator
+tools/diff.py                field-by-field comparison of two reports
 ```
 
 ## Contributing a field

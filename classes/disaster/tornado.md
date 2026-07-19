@@ -36,3 +36,4 @@ This is a physical event: `where` is the touchdown locality — a `geo:` or `gn:
 | fixture | notes |
 |---|---|
 | [`fixtures/disaster.tornado/coastal-herald/`](../../fixtures/disaster.tornado/coastal-herald/) | Sensationalized report that raises deaths and home damage without stating numbers (→ `null` claims), describes an active rescue, and carries one attributed expert forecast. The apocalyptic framing encodes to nothing. |
+| [`fixtures/disaster.tornado/regionx-courier/`](../../fixtures/disaster.tornado/regionx-courier/) | Sober day-after report on the same event (same derived event key): quantified casualties and damage with attribution (`by`) and as-of times (`t`), an official EF rating, rescue concluded. Pairs with `coastal-herald` for the `tools/diff.py` demo. |
