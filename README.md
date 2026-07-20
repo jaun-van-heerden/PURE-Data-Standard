@@ -183,16 +183,16 @@ Reality immediately forced the spec to evolve — which is the design working, n
 - **Units stay in `ext:` field names** (`ext:peak_wind_mph`) — conversion is inference; SI units get fixed at promotion time.
 - **Per-location counts are not totals** (the narrative destroys "two single-family homes" at one intersection — that is not `damage.homes_destroyed` for the event) — class-file rule sharpened.
 
-## The form is compiled from the spec
+## The form is the spec — one rigid step at a time
 
-`tools/wizard.py` compiles the class files into a self-contained web form, `docs/index.html` — the guided encoder for humans:
+`tools/wizard.py` compiles the class files into `docs/index.html`: a strict stepper whose entire purpose is **convergence** — two strangers walking it on the same article should produce the byte-identical report, because at every step the obvious answer is the only answer available:
 
-- The **dropdown cascade is the taxonomy tree** (pick `disaster`, then `tornado`); selecting a class unlocks exactly that class's questions plus the common location facets — the staged decision tree from the pipeline, as UI.
-- Every answer demands its quote, **verified live** against the pasted source text (✓/✗ as you type) — no quote, no claim, enforced in the browser.
-- "Not mentioned / stated value / at least N / raised-but-no-value" are explicit choices per field, mirroring the spec's three epistemic states.
-- **Seal** builds the canonical report client-side: claims sorted, canonical JSON, SHA-256 report ID, event key — nothing leaves the browser.
+- **Steps are gated in dependency order** — source → classify → core (`what`/`when`/`where`) → facts → statements → derivation → seal. Nothing below is answerable before what's above: the class you pick decides which questions exist at all.
+- **Quotes are selected, never typed.** The source renders as clickable lines; the quote is a byte-slice of the source, so it is verbatim *by construction* — mistyping a quote is impossible. Rule shown on screen: if several lines state it, select the first.
+- **Values are extracted, not authored.** Counts offer exactly three choices (stated number / "at least N" / raised-but-no-number → `null`); enums and booleans are pickers; `where` is either stated coordinates (the geohash is computed, never typed) or the stated place phrase (checked verbatim against the source); `when` is composed from date + time + offset pickers.
+- **Everything derivable is derived** — canonical bytes, SHA-256 report ID, event key — client-side, nothing leaves the browser.
 
-The form is never edited by hand. Add a class file, rerun `python3 tools/wizard.py`, and the new dropdowns and questions appear — the wizard *is* the spec, mechanically. Serve `docs/` (e.g. GitHub Pages) and "the schema loaded onto a web app" is literally what you get.
+The form is never edited by hand: add a class file, rerun `python3 tools/wizard.py`, and new dropdown branches and questions appear — spec, extraction prompt, and human wizard are all compiled from the same class files. Serve `docs/` (e.g. GitHub Pages) and "the schema loaded onto a web app" is literally what you get.
 
 ## Repository layout
 
