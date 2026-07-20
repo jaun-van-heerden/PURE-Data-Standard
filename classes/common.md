@@ -18,7 +18,7 @@ python3 tools/validate.py REPORT.json --source SOURCE --class classes/common.md 
 
 ## Reserved facet names (guidance)
 
-Sources state place in many shapes — coordinates, a venue, an address, an administrative area. When a source states one of these, use **these names**, so encoders converge instead of inventing dialects. Each is one claim, with its own quote; each enters the table above once real reports use it and agreement is measured (GOVERNANCE.md — evidence precedes normativity):
+Sources state place in many shapes — coordinates, a venue, an address, an administrative area. When a source states one of these, use **these names under `ext:`** (e.g. `ext:location.venue`), so encoders converge instead of inventing dialects. Each is one claim, with its own quote; each drops the `ext:` prefix and enters the table above once real reports use it and agreement is measured (GOVERNANCE.md — evidence precedes normativity):
 
 | name | meaning |
 |---|---|
