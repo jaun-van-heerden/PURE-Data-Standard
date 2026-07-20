@@ -188,6 +188,7 @@ Reality immediately forced the spec to evolve — which is the design working, n
 ```
 SPEC.md                      the one-page normative core
 GOVERNANCE.md                how the spec may change, and how it may not
+classes/common.md            class-independent fields (location.* facets)
 classes/<parent>/<class>.md  one file per event class: fields + questions + fixtures
 fixtures/<class>/<name>/     source.txt + expected.json (canonical bytes)
 tools/validate.py            reference validator

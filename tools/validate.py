@@ -91,6 +91,12 @@ def check_field_type(claim, ftype):
     elif t == "bool":
         if not (v is None or isinstance(v, bool)):
             err(f"claim {f}: bool must be true, false, or null")
+    elif t == "string":
+        if not (v is None or isinstance(v, str)):
+            err(f"claim {f}: string field must be a string or null")
+    elif t == "number":
+        if not (v is None or (isinstance(v, (int, float)) and not isinstance(v, bool))):
+            err(f"claim {f}: number field must be a number or null")
     elif t.startswith("enum(") and t.endswith(")"):
         allowed = t[5:-1].split("|")
         if not (v is None or v in allowed):
@@ -115,7 +121,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("report")
     ap.add_argument("--source")
-    ap.add_argument("--class", dest="class_file")
+    ap.add_argument("--class", dest="class_files", action="append", default=[],
+                    help="class file(s); repeat for classes/common.md + the event class")
     args = ap.parse_args()
 
     raw = open(args.report, "rb").read()
@@ -153,7 +160,11 @@ def main():
         if src.get("sha256") != actual:
             err(f"source.sha256 mismatch: report says {src.get('sha256')}, file is {actual}")
 
-    class_fields = parse_class_fields(args.class_file) if args.class_file else None
+    class_fields = None
+    if args.class_files:
+        class_fields = {}
+        for cf in args.class_files:
+            class_fields.update(parse_class_fields(cf))
 
     seen_f = set()
     for i, c in enumerate(claims):

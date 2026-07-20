@@ -27,7 +27,7 @@ wild (ext:, anyone, anytime)  →  observed (recorded in the class file)  →  n
 
 The ratchet is one-way for meaning: a normative field is never renamed, never repurposed, never redefined. If its meaning turns out wrong, it is deprecated (old data stays valid forever) and a replacement earns its own way in. A field whose agreement collapses on new fixtures is flagged and deprecated the same way — the table must keep earning itself.
 
-**Classes follow the same ratchet.** A new class file requires real fixtures from independent sources, and must show that existing classes plus `ext:` *cannot* encode its events — if they can, the answer is promoting `ext:` fields, not a new class. Class paths, like field names, never move once normative.
+**Classes follow the same ratchet.** A new class file requires real fixtures from independent sources, and must show that existing classes plus `ext:` *cannot* encode its events — if they can, the answer is promoting `ext:` fields, not a new class. Class paths, like field names, never move once normative. Fields whose meaning is class-independent (e.g. `location.*`) live in `classes/common.md` under the same ratchet — being common is a property a field demonstrates, not a bucket to design into.
 
 ## Disputes are settled by encoding, not debating
 
